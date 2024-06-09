@@ -31,7 +31,8 @@ export default function Login() {
 			notify(data.message, "success");
 			navigate("/");
 		} catch (error) {
-			notify(error?.response?.message || error.message, "error");
+			const data = error?.response?.data;
+			notify(data?.message || error.message, "error");
 		} finally {
 			setSubmitting(false);
 		}
