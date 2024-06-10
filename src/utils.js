@@ -8,7 +8,7 @@ export class DateTimeUtil {
 	static parse(value, toDate = true, toTime = false) {
 		const format = toTime
 			? DateTimeUtil.DATETIME_FORMAT
-			: DateTimeUtil.DISPLAY_FORMAT;
+			: DateTimeUtil.REQUEST_FORMAT;
 
 		const time = moment(value, format, true);
 		return toDate ? time.toDate() : time;
