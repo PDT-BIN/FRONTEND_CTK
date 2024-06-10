@@ -37,10 +37,7 @@ function App() {
 							<Topbar />
 							<div className="display">
 								<Routes>
-									<Route
-										path="/employee"
-										element={<Employee />}
-									/>
+									<Route path="/" element={<Employee />} />
 									<Route
 										path="/driver"
 										element={<Driver />}

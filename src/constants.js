@@ -1,6 +1,6 @@
 export const URL_TO_TAB = {
-	"/": "Dashboard",
-	"/employee": "Employee",
+	// "/": "Dashboard",
+	"/": "Employee",
 	"/driver": "Driver",
 	"/coach": "Coach",
 	"/journey": "Journey",

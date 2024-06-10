@@ -37,7 +37,7 @@ function MenuIcon({ state, setState }) {
 }
 
 function Item({ title, icon, selected, setSelected }) {
-	const link = `/${title === "Dashboard" ? "" : title.toLowerCase()}`;
+	const link = `/${title === "Employee" ? "" : title.toLowerCase()}`;
 
 	return (
 		<MenuItem
@@ -125,14 +125,14 @@ export default function Sidebar() {
 					</Box>
 				)}
 				{/* DASHBOARD */}
-				<Item
+				{/* <Item
 					title="Dashboard"
 					icon={<RxDashboard />}
 					selected={selected}
 					setSelected={setSelected}
-				/>
+				/> */}
 				{/* DIVIDER */}
-				<Divider style={{ margin: "10px 0" }} />
+				{/* <Divider style={{ margin: "10px 0" }} /> */}
 				{/* INFORMATION */}
 				<Item
 					title="Employee"
