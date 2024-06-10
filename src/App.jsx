@@ -7,6 +7,7 @@ import Login from "./pages/auth/Login";
 import Notification, { controlNotify } from "./components/Notification";
 import Sidebar from "./components/Sidebar";
 import Topbar from "./components/Topbar";
+import Employee from "./pages/employee";
 
 function App() {
 	const [theme, colorMode] = useMode();
@@ -32,7 +33,12 @@ function App() {
 						<main className="content">
 							<Topbar />
 							<div className="display">
-								<Routes></Routes>
+								<Routes>
+									<Route
+										path="/employee"
+										element={<Employee />}
+									/>
+								</Routes>
 							</div>
 						</main>
 					</div>
