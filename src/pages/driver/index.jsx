@@ -3,14 +3,14 @@ import { Box } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { ColorModeContext, tokens } from "../../theme";
 import { DataGrid } from "@mui/x-data-grid";
-import { dataEmployee } from "../../data";
+import { dataDriver } from "../../data";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import AxiosInstance from "../../api/api";
 import { DateTimeUtil } from "../../utils";
 import ModifyModal from "./ModifyModal";
 import Toolbar from "../../components/Toolbar";
 
-export default function Employee() {
+export default function Driver() {
 	const theme = useTheme();
 	const colors = tokens(theme.palette.mode);
 	// DATAGRID CONFIGURATION.
@@ -42,8 +42,15 @@ export default function Employee() {
 			flex: 1,
 			sortable: false,
 		},
+		{
+			field: "typeLicense",
+			headerName: "LICENSE",
+			flex: 0.75,
+			sortable: false,
+			valueGetter: (value) => value.replace("hạng", ""),
+		},
 	];
-	const [rows, setRows] = useState(dataEmployee);
+	const [rows, setRows] = useState(dataDriver);
 	const selectedRow = useRef({});
 	const [selectedRowModel, setSelectedRowModel] = useState([]);
 	// DIALOG SECTION.
@@ -56,7 +63,7 @@ export default function Employee() {
 	// API.
 	const { notify } = useContext(ColorModeContext);
 	useEffect(() => {
-		AxiosInstance.get("manage/employees")
+		AxiosInstance.get("manage/drivers")
 			.then((response) => {
 				const data = response.data;
 				setRows(data.data);
@@ -107,7 +114,7 @@ export default function Employee() {
 		};
 
 		if (!openForUpdating) {
-			AxiosInstance.post("manage/employee", contentValues)
+			AxiosInstance.post("manage/driver", contentValues)
 				.then((response) => {
 					const data = response.data;
 					notify(data.message);
@@ -118,7 +125,7 @@ export default function Employee() {
 					notify(data?.message || error.message, "error");
 				});
 		} else {
-			AxiosInstance.put("manage/employee", contentValues)
+			AxiosInstance.put("manage/driver", contentValues)
 				.then((response) => {
 					const data = response.data;
 					notify(data.message);
@@ -134,7 +141,7 @@ export default function Employee() {
 
 	// CALL API DELETE.
 	function handleDeleteSubmit() {
-		const PATH = `manage/employee?id=${selectedRow.current["id"]}`;
+		const PATH = `manage/driver?id=${selectedRow.current["id"]}`;
 		AxiosInstance.delete(PATH)
 			.then((response) => {
 				const data = response.data;

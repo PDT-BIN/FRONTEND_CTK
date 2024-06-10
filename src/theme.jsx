@@ -69,7 +69,7 @@ export const themeSettings = (mode) => {
 				  {
 						primary: { main: colors.primary[100] },
 						secondary: { main: colors.green[500] },
-						background: { default: "#FCFCFC" },
+						background: { default: colors.grey[900] },
 						neutral: {
 							dark: colors.grey[700],
 							main: colors.grey[500],

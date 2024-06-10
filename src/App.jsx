@@ -8,6 +8,7 @@ import Notification, { controlNotify } from "./components/Notification";
 import Sidebar from "./components/Sidebar";
 import Topbar from "./components/Topbar";
 import Employee from "./pages/employee";
+import Driver from "./pages/driver";
 
 function App() {
 	const [theme, colorMode] = useMode();
@@ -37,6 +38,10 @@ function App() {
 									<Route
 										path="/employee"
 										element={<Employee />}
+									/>
+									<Route
+										path="/driver"
+										element={<Driver />}
 									/>
 								</Routes>
 							</div>

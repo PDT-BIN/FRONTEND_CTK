@@ -1,6 +1,6 @@
 import { Formik } from "formik";
 import * as yup from "yup";
-import { Box } from "@mui/material";
+import { Box, MenuItem } from "@mui/material";
 import DialogActions from "@mui/material/DialogActions";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
@@ -9,19 +9,21 @@ import Dialog from "../../components/customs/Dialog";
 import Button from "../../components/customs/Button";
 import TextField from "../../components/customs/TextField";
 import { DateTimeUtil } from "../../utils";
-import { PHONE_REGEX } from "../../constants";
+import { DRIVER_LICENSES, PHONE_REGEX } from "../../constants";
 
 const initialValues = {
 	fullName: "",
 	dateOfBirth: null,
 	phoneNumber: "",
 	address: "",
+	typeLicense: "",
 };
 
 const validationSchema = yup.object({
 	fullName: yup.string().trim().required("Field is required!"),
 	dateOfBirth: yup.object().nonNullable(),
 	address: yup.string().trim().required("Field is required!"),
+	typeLicense: yup.string().trim().required("Field is required!"),
 	phoneNumber: yup
 		.string()
 		.trim("Field expects a phone number!")
@@ -140,6 +142,38 @@ export default function ModifyModal({
 									sx={{ gridColumn: "span 2" }}
 									fullWidth
 								/>
+								<TextField
+									name="typeLicense"
+									label="LICENSE"
+									type="text"
+									value={values.typeLicense}
+									onBlur={handleBlur}
+									onChange={handleChange}
+									error={
+										!!touched.typeLicense &&
+										!!errors.typeLicense
+									}
+									helperText={
+										touched.typeLicense &&
+										errors.typeLicense
+									}
+									sx={{ gridColumn: "span 2" }}
+									fullWidth
+									select
+								>
+									{DRIVER_LICENSES.map((option) => (
+										<MenuItem
+											key={option.value}
+											value={option.value}
+											sx={{
+												padding: "10px",
+												fontStyle: "italic",
+											}}
+										>
+											{option.label.toUpperCase()}
+										</MenuItem>
+									))}
+								</TextField>
 							</Box>
 
 							<DialogActions sx={{ mt: "25px", gap: "10px" }}>

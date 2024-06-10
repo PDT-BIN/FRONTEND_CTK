@@ -1,7 +1,7 @@
 import moment from "moment";
 
 export class DateTimeUtil {
-	static REQUEST_FORMAT = "MM-DD-YYYY";
+	static REQUEST_FORMAT = "YYYY-MM-DD";
 	static DISPLAY_FORMAT = "DD/MM/YYYY";
 
 	static parse(value, toDate = true) {
