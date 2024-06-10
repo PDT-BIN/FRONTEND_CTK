@@ -21,3 +21,8 @@ export const DRIVER_LICENSES = [
 	{ value: "hạng FC", label: "hạng FC" },
 	{ value: "hạng FE", label: "hạng FE" },
 ];
+
+export const COACH_TYPES = [
+	{ value: "Limousine", label: "Limousine" },
+	{ value: "Giường", label: "Sleeper" },
+];

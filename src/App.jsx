@@ -9,6 +9,7 @@ import Sidebar from "./components/Sidebar";
 import Topbar from "./components/Topbar";
 import Employee from "./pages/employee";
 import Driver from "./pages/driver";
+import Coach from "./pages/coach";
 
 function App() {
 	const [theme, colorMode] = useMode();
@@ -43,6 +44,7 @@ function App() {
 										path="/driver"
 										element={<Driver />}
 									/>
+									<Route path="/coach" element={<Coach />} />
 								</Routes>
 							</div>
 						</main>

@@ -3,54 +3,39 @@ import { Box } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { ColorModeContext, tokens } from "../../theme";
 import { DataGrid } from "@mui/x-data-grid";
-import { dataDriver } from "../../data";
+import { dataCoach } from "../../data";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import AxiosInstance from "../../api/api";
 import { DateTimeUtil } from "../../utils";
 import ModifyModal from "./ModifyModal";
 import Toolbar from "../../components/Toolbar";
 
-export default function Driver() {
+export default function Coach() {
 	const theme = useTheme();
 	const colors = tokens(theme.palette.mode);
 	// DATAGRID CONFIGURATION.
 	const columns = [
-		{ field: "id", headerName: "ID", flex: 0.5, hideable: false },
+		{ field: "id", headerName: "ID", flex: 1, hideable: false },
 		{
-			field: "fullName",
-			headerName: "FULLNAME",
+			field: "licensePlate",
+			headerName: "LICENSE PLATE",
 			flex: 1,
 			hideable: false,
 		},
 		{
-			field: "dateOfBirth",
-			headerName: "DATE OF BIRTH",
-			flex: 0.75,
-			type: "date",
-			valueGetter: (value) => DateTimeUtil.parse(value),
-			valueFormatter: (value) => DateTimeUtil.format(value),
-		},
-		{
-			field: "phoneNumber",
-			headerName: "PHONE NUMBER",
+			field: "totalSeats",
+			headerName: "TOTAL SEATS",
+			type: "number",
 			flex: 1,
-			sortable: false,
 		},
 		{
-			field: "address",
-			headerName: "ADDRESS",
-			flex: 1,
-			sortable: false,
-		},
-		{
-			field: "typeLicense",
-			headerName: "LICENSE",
+			field: "busType",
+			headerName: "TYPE",
 			flex: 0.75,
-			sortable: false,
-			valueGetter: (value) => value.replace("hạng", ""),
+			valueGetter: (value) => value,
 		},
 	];
-	const [rows, setRows] = useState(dataDriver);
+	const [rows, setRows] = useState(dataCoach);
 	const selectedRow = useRef({});
 	const [selectedRowModel, setSelectedRowModel] = useState([]);
 	// DIALOG SECTION.
@@ -63,7 +48,7 @@ export default function Driver() {
 	// API.
 	const { notify } = useContext(ColorModeContext);
 	useEffect(() => {
-		AxiosInstance.get("manage/drivers")
+		AxiosInstance.get("manage/buses")
 			.then((response) => {
 				const data = response.data;
 				setRows(data.data);
@@ -105,16 +90,8 @@ export default function Driver() {
 
 	// CALL API CREATE & UPDATE.
 	function handleModifySubmit(contentValues, { setSubmitting }) {
-		contentValues = {
-			...contentValues,
-			dateOfBirth: DateTimeUtil.format(
-				contentValues["dateOfBirth"],
-				false
-			),
-		};
-
 		if (!openForUpdating) {
-			AxiosInstance.post("manage/driver", contentValues)
+			AxiosInstance.post("manage/bus", contentValues)
 				.then((response) => {
 					const data = response.data;
 					notify(data.message);
@@ -125,7 +102,7 @@ export default function Driver() {
 					notify(data?.message || error.message, "error");
 				});
 		} else {
-			AxiosInstance.put("manage/driver", contentValues)
+			AxiosInstance.put("manage/bus", contentValues)
 				.then((response) => {
 					const data = response.data;
 					notify(data.message);
@@ -141,7 +118,7 @@ export default function Driver() {
 
 	// CALL API DELETE.
 	function handleDeleteSubmit() {
-		const PATH = `manage/driver?id=${selectedRow.current["id"]}`;
+		const PATH = `manage/bus?id=${selectedRow.current["id"]}`;
 		AxiosInstance.delete(PATH)
 			.then((response) => {
 				const data = response.data;
@@ -231,7 +208,7 @@ export default function Driver() {
 				isOpened={openModify}
 				handleClose={closeModifyDialog}
 				handleFormSubmit={handleModifySubmit}
-				title="DRIVER PROFILE"
+				title="COACH PROFILE"
 				data={selectedRow.current}
 			/>
 

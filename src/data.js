@@ -279,3 +279,66 @@ export const dataDriver = [
 		typeLicense: "hạng B2",
 	},
 ];
+
+export const dataCoach = [
+	{
+		id: 1,
+		licensePlate: "50F-030.15",
+		totalSeats: 44,
+		busType: "Limousine",
+	},
+	{
+		id: 2,
+		licensePlate: "50F-030.16",
+		totalSeats: 44,
+		busType: "Limousine",
+	},
+	{
+		id: 3,
+		licensePlate: "50F-030.17",
+		totalSeats: 44,
+		busType: "Limousine",
+	},
+	{
+		id: 4,
+		licensePlate: "50F-030.18",
+		totalSeats: 44,
+		busType: "Limousine",
+	},
+	{
+		id: 5,
+		licensePlate: "50F-030.19",
+		totalSeats: 44,
+		busType: "Limousine",
+	},
+	{
+		id: 6,
+		licensePlate: "50F-030.20",
+		totalSeats: 44,
+		busType: "Limousine",
+	},
+	{
+		id: 7,
+		licensePlate: "50F-030.21",
+		totalSeats: 44,
+		busType: "Limousine",
+	},
+	{
+		id: 8,
+		licensePlate: "50F-030.22",
+		totalSeats: 44,
+		busType: "Limousine",
+	},
+	{
+		id: 9,
+		licensePlate: "50F-030.23",
+		totalSeats: 44,
+		busType: "Limousine",
+	},
+	{
+		id: 10,
+		licensePlate: "50F-030.24",
+		totalSeats: 44,
+		busType: "Limousine",
+	},
+];
