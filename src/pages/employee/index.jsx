@@ -3,7 +3,6 @@ import { Box } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { ColorModeContext, tokens } from "../../theme";
 import { DataGrid } from "@mui/x-data-grid";
-import { dataEmployee } from "../../data";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import AxiosInstance from "../../api/api";
 import { DateTimeUtil } from "../../utils";
@@ -43,7 +42,7 @@ export default function Employee() {
 			sortable: false,
 		},
 	];
-	const [rows, setRows] = useState(dataEmployee);
+	const [rows, setRows] = useState([]);
 	const selectedRow = useRef({});
 	const [selectedRowModel, setSelectedRowModel] = useState([]);
 	// DIALOG SECTION.

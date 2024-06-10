@@ -3,7 +3,6 @@ import { Box } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { ColorModeContext, tokens } from "../../theme";
 import { DataGrid, GridToolbarContainer } from "@mui/x-data-grid";
-import { dataJourney, dataCoach, dataDriver } from "../../data";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import AxiosInstance from "../../api/api";
 import { DateTimeUtil } from "../../utils";
@@ -77,7 +76,7 @@ export default function Journey() {
 			type: "number",
 		},
 	];
-	const [rows, setRows] = useState(dataJourney);
+	const [rows, setRows] = useState([]);
 	const selectedRow = useRef({});
 	const [selectedRowModel, setSelectedRowModel] = useState([]);
 	// DIALOG SECTION.
@@ -87,8 +86,8 @@ export default function Journey() {
 	const EMPLOYEE_ID = getTokenItem("EMPLOYEE_ID");
 	// API.
 	const { notify } = useContext(ColorModeContext);
-	const [coaches, setCoaches] = useState(dataCoach);
-	const [drivers, setDrivers] = useState(dataDriver);
+	const [coaches, setCoaches] = useState([]);
+	const [drivers, setDrivers] = useState([]);
 	const [provinces, setProvinces] = useState([]);
 	useEffect(() => {
 		AxiosInstance.get("manage/buses")

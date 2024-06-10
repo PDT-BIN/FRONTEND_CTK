@@ -3,7 +3,6 @@ import { Box } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { ColorModeContext, tokens } from "../../theme";
 import { DataGrid } from "@mui/x-data-grid";
-import { dataDriver } from "../../data";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import AxiosInstance from "../../api/api";
 import { DateTimeUtil } from "../../utils";
@@ -50,7 +49,7 @@ export default function Driver() {
 			valueGetter: (value) => value.replace("hạng", ""),
 		},
 	];
-	const [rows, setRows] = useState(dataDriver);
+	const [rows, setRows] = useState([]);
 	const selectedRow = useRef({});
 	const [selectedRowModel, setSelectedRowModel] = useState([]);
 	// DIALOG SECTION.

@@ -3,7 +3,6 @@ import { Box } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { ColorModeContext, tokens } from "../../theme";
 import { DataGrid } from "@mui/x-data-grid";
-import { dataCoach } from "../../data";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import AxiosInstance from "../../api/api";
 import ModifyModal from "./ModifyModal";
@@ -34,7 +33,7 @@ export default function Coach() {
 			valueGetter: (value) => value,
 		},
 	];
-	const [rows, setRows] = useState(dataCoach);
+	const [rows, setRows] = useState([]);
 	const selectedRow = useRef({});
 	const [selectedRowModel, setSelectedRowModel] = useState([]);
 	// DIALOG SECTION.
