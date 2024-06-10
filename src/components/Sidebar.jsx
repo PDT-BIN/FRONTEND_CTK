@@ -15,6 +15,7 @@ import { BsArrowLeftSquareFill, BsArrowRightSquareFill } from "react-icons/bs";
 import { RxDashboard } from "react-icons/rx";
 import { Box, Divider, Typography } from "@mui/material";
 import { URL_TO_TAB } from "../constants";
+import getTokenItem from "../api/token";
 
 function MenuIcon({ state, setState }) {
 	return (
@@ -57,6 +58,9 @@ export default function Sidebar() {
 	const location = useLocation();
 	const [isCollapsed, setIsCollapsed] = useState(false);
 	const [selected, setSelected] = useState(URL_TO_TAB[location.pathname]);
+	// USER INFORMATION.
+	const FULLNAME = getTokenItem("FULLNAME");
+	const ROLE_NAME = getTokenItem("ROLE_NAME");
 
 	// API GET PERSONAL INFORMATION.
 	useEffect(() => {}, []);
@@ -108,14 +112,14 @@ export default function Sidebar() {
 								fontWeight="bold"
 								sx={{ m: "10px 0" }}
 							>
-								FULLNAME
+								{FULLNAME}
 							</Typography>
 							<Typography
 								variant="h5"
 								color={colors.green[500]}
 								letterSpacing={1.25}
 							>
-								ROLE
+								{ROLE_NAME}
 							</Typography>
 						</Box>
 					</Box>

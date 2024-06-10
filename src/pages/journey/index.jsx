@@ -11,6 +11,7 @@ import ModifyModal from "./ModifyModal";
 import { MdAddBox } from "react-icons/md";
 import { FaDeleteLeft } from "react-icons/fa6";
 import Button from "../../components/customs/Button";
+import getTokenItem from "../../api/token";
 
 function Toolbar(props) {
 	const theme = useTheme();
@@ -82,6 +83,8 @@ export default function Journey() {
 	// DIALOG SECTION.
 	const [openModify, setOpenModify] = useState(false);
 	const [openDelete, setOpenDelete] = useState(false);
+	// USER INFORMATION.
+	const EMPLOYEE_ID = getTokenItem("EMPLOYEE_ID");
 	// API.
 	const { notify } = useContext(ColorModeContext);
 	const [coaches, setCoaches] = useState(dataCoach);
@@ -159,6 +162,8 @@ export default function Journey() {
 
 	// CALL API CREATE.
 	function handleModifySubmit(contentValues, { setSubmitting }) {
+		contentValues["employeeId"] = EMPLOYEE_ID;
+
 		AxiosInstance.post("manage/journey", contentValues)
 			.then((response) => {
 				const data = response.data;
