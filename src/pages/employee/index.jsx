@@ -89,7 +89,7 @@ export default function Employee() {
 	// API.
 	const { notify } = useContext(ColorModeContext);
 	useEffect(() => {
-		AxiosInstance.get("manage/employee/")
+		AxiosInstance.get("manage/employee")
 			.then((response) => {
 				const data = response.data;
 				setRows(data.data);
@@ -140,7 +140,7 @@ export default function Employee() {
 		};
 
 		if (!openForUpdating) {
-			AxiosInstance.post("manage/employee/", contentValues)
+			AxiosInstance.post("manage/employee", contentValues)
 				.then((response) => {
 					const data = response.data;
 					notify(data.message);
@@ -151,7 +151,7 @@ export default function Employee() {
 					notify(data?.message || error.message, "error");
 				});
 		} else {
-			AxiosInstance.put("manage/employee/", contentValues)
+			AxiosInstance.put("manage/employee", contentValues)
 				.then((response) => {
 					const data = response.data;
 					notify(data.message);
@@ -167,7 +167,7 @@ export default function Employee() {
 
 	// CALL API DELETE.
 	function handleDeleteSubmit() {
-		const PATH = `manage/employee/?id=${selectedRow.current["id"]}/`;
+		const PATH = `manage/employee?id=${selectedRow.current["id"]}`;
 		AxiosInstance.delete(PATH)
 			.then((response) => {
 				const data = response.data;

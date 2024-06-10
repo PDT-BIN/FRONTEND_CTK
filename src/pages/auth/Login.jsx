@@ -24,7 +24,7 @@ export default function Login() {
 	// CALL API LOGIN.
 	const handleFormSubmit = async (values, { setSubmitting }) => {
 		try {
-			const response = await AxiosInstance.post("auth/login/", values);
+			const response = await AxiosInstance.post("auth/login", values);
 			const data = response.data;
 
 			localStorage.setItem(ACCESS_TOKEN, data.data);
