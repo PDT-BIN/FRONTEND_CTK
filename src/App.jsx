@@ -11,6 +11,7 @@ import Employee from "./pages/employee";
 import Driver from "./pages/driver";
 import Coach from "./pages/coach";
 import Journey from "./pages/journey";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
 	const [theme, colorMode] = useMode();
@@ -37,16 +38,24 @@ function App() {
 							<Topbar />
 							<div className="display">
 								<Routes>
-									<Route path="/" element={<Employee />} />
-									<Route
-										path="/driver"
-										element={<Driver />}
-									/>
-									<Route path="/coach" element={<Coach />} />
-									<Route
-										path="/journey"
-										element={<Journey />}
-									/>
+									<Route element={<ProtectedRoute />}>
+										<Route
+											path="/"
+											element={<Employee />}
+										/>
+										<Route
+											path="/driver"
+											element={<Driver />}
+										/>
+										<Route
+											path="/coach"
+											element={<Coach />}
+										/>
+										<Route
+											path="/journey"
+											element={<Journey />}
+										/>
+									</Route>
 								</Routes>
 							</div>
 						</main>
