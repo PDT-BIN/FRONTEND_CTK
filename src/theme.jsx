@@ -5,6 +5,17 @@ import { blue, green, grey, indigo, red } from "@mui/material/colors";
 // COLOR-KEY.
 const KEYS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
 const AKEYS = ["A100", "A200", "A400", "A700"];
+const PRIMARY_COLOR = {
+	100: "#d0d1d5",
+	200: "#a1a4ab",
+	300: "#727681",
+	400: "#1F2A40",
+	500: "#141b2d",
+	600: "#101624",
+	700: "#0c101b",
+	800: "#080b12",
+	900: "#040509",
+};
 
 function reverseShade(shades) {
 	return [KEYS, AKEYS].reduce((set, keys, _) => {
@@ -29,7 +40,7 @@ function reverseColor(colors) {
 
 // COLOR DESIGN TOKEN.
 export const tokens = (mode) => {
-	const DARK_MODE = { indigo, grey, red, green, blue };
+	const DARK_MODE = { grey, red, green, blue, primary: PRIMARY_COLOR };
 	const LIGHT_MODE = reverseColor(DARK_MODE);
 
 	return { ...(mode === "dark" ? DARK_MODE : LIGHT_MODE) };
@@ -45,13 +56,25 @@ export const themeSettings = (mode) => {
 			...(mode === "dark"
 				? // PALETTE VALUES FOR DARK MODE.
 				  {
-						primary: { main: colors.indigo[500] },
+						primary: { main: colors.primary[500] },
 						secondary: { main: colors.green[500] },
+						background: { default: colors.primary[500] },
+						neutral: {
+							dark: colors.grey[700],
+							main: colors.grey[500],
+							light: colors.grey[100],
+						},
 				  }
 				: // PALETTE VALUES FOR LIGHT MODE.
 				  {
-						primary: { main: colors.indigo[200] },
+						primary: { main: colors.primary[100] },
 						secondary: { main: colors.green[500] },
+						background: { default: "#FCFCFC" },
+						neutral: {
+							dark: colors.grey[700],
+							main: colors.grey[500],
+							light: colors.grey[100],
+						},
 				  }),
 		},
 		typography: {

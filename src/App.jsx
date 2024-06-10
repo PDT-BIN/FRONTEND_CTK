@@ -5,6 +5,8 @@ import { URL_TO_TAB } from "./constants";
 import NotFound from "./components/NotFound";
 import Login from "./pages/auth/Login";
 import Notification, { controlNotify } from "./components/Notification";
+import Sidebar from "./components/Sidebar";
+import Topbar from "./components/Topbar";
 
 function App() {
 	const [theme, colorMode] = useMode();
@@ -26,8 +28,12 @@ function App() {
 					</Routes>
 				) : (
 					<div className="app">
+						<Sidebar />
 						<main className="content">
-							<Routes></Routes>
+							<Topbar />
+							<div className="display">
+								<Routes></Routes>
+							</div>
 						</main>
 					</div>
 				)}
