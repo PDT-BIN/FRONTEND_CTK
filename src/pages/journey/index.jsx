@@ -62,7 +62,7 @@ export default function Journey() {
 			field: "departureProvince",
 			headerName: "DEPARTURE PLACE",
 			flex: 1,
-			valueGetter: (value, row) => `${value} ${row.destProvince}`,
+			valueGetter: (value, row) => `${value} - ${row.destProvince}`,
 		},
 		{
 			field: "estimatedTime",
@@ -162,7 +162,21 @@ export default function Journey() {
 
 	// CALL API CREATE.
 	function handleModifySubmit(contentValues, { setSubmitting }) {
-		contentValues["employeeId"] = EMPLOYEE_ID;
+		contentValues = {
+			...contentValues,
+			departureDate: DateTimeUtil.format(
+				contentValues["departureDate"],
+				false
+			),
+			departureTime: DateTimeUtil.format(
+				contentValues["departureTime"],
+				false,
+				false,
+				"HH:mm"
+			),
+			employeeId: EMPLOYEE_ID,
+		};
+		console.log(contentValues);
 
 		AxiosInstance.post("manage/journey", contentValues)
 			.then((response) => {

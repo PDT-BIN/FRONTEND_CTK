@@ -27,12 +27,18 @@ const initialValues = {
 const validationSchema = yup.object({
 	departureDate: yup.object().nonNullable(),
 	departureTime: yup.object().nonNullable(),
-	estimatedTime: yup.number().required("Field is required!"),
-	price: yup.number().required("Field is required!"),
+	estimatedTime: yup
+		.number()
+		.required("Field is required!")
+		.min(0, "Duration must be a positive number!"),
+	price: yup
+		.number()
+		.required("Field is required!")
+		.min(0, "Price must be a positive number!"),
 	departureProvinceId: yup.number().required("Field is required!"),
 	destProvinceId: yup.number().required("Field is required!"),
 	busId: yup.number().required("Field is required!"),
-	drivers: yup.array().length(1, "At least 1 driver!"),
+	drivers: yup.array().min(1, "At least 1 driver!"),
 });
 
 export default function ModifyModal({

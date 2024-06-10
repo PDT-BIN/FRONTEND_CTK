@@ -38,24 +38,18 @@ function App() {
 							<Topbar />
 							<div className="display">
 								<Routes>
-									<Route element={<ProtectedRoute />}>
-										<Route
-											path="/"
-											element={<Employee />}
-										/>
-										<Route
-											path="/driver"
-											element={<Driver />}
-										/>
-										<Route
-											path="/coach"
-											element={<Coach />}
-										/>
-										<Route
-											path="/journey"
-											element={<Journey />}
-										/>
-									</Route>
+									{/* <Route element={<ProtectedRoute />}> */}
+									<Route path="/" element={<Employee />} />
+									<Route
+										path="/driver"
+										element={<Driver />}
+									/>
+									<Route path="/coach" element={<Coach />} />
+									<Route
+										path="/journey"
+										element={<Journey />}
+									/>
+									{/* </Route> */}
 								</Routes>
 							</div>
 						</main>

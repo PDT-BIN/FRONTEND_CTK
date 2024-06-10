@@ -14,13 +14,14 @@ export class DateTimeUtil {
 		return toDate ? time.toDate() : time;
 	}
 
-	static format(value, display = true, datetime = false) {
-		const format = !display
+	static format(value, display = true, datetime = false, format = null) {
+		let type = !display
 			? DateTimeUtil.REQUEST_FORMAT
 			: !datetime
 			? DateTimeUtil.DISPLAY_FORMAT
 			: DateTimeUtil.DATETIME_FORMAT;
-		const date = moment(value).format(format);
+		if (format !== null) type = format;
+		const date = moment(value).format(type);
 		return date !== "Invalid date" ? date : "";
 	}
 }
