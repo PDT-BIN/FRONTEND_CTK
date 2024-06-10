@@ -28,7 +28,7 @@ function Toolbar(props) {
 			<Button
 				label="DELETE RECORD"
 				onClick={props.openDeleteDialog}
-				disabled={!props.openForUpdating}
+				disabled={!Boolean(props.selectedRow.current.id)}
 				startIcon={<FaDeleteLeft />}
 				style={{ padding: "10px", color: colors.green[600] }}
 			/>
@@ -265,6 +265,7 @@ export default function Journey() {
 							openCreateDialog,
 							openModifyDialog,
 							openDeleteDialog,
+							selectedRow,
 						},
 					}}
 					rowSelectionModel={selectedRowModel}
