@@ -342,3 +342,36 @@ export const dataCoach = [
 		busType: "Limousine",
 	},
 ];
+
+export const dataJourney = [
+	{
+		id: 2,
+		departureDate: "2024-06-11",
+		departureTime: "17:30",
+		estimatedTime: 7,
+		price: 250000,
+		bus: {
+			id: 1,
+			licensePlate: "50F-030.11",
+			totalSeats: 30,
+			busType: "ghe",
+		},
+		departureProvince: "An Giang",
+		destProvince: "Bà Rịa - Vũng Tàu",
+	},
+	{
+		id: 3,
+		departureDate: "2024-06-10",
+		departureTime: "06:00",
+		estimatedTime: 7,
+		price: 250000,
+		bus: {
+			id: 1,
+			licensePlate: "50F-030.11",
+			totalSeats: 30,
+			busType: "ghe",
+		},
+		departureProvince: "Bà Rịa - Vũng Tàu",
+		destProvince: "An Giang",
+	},
+];

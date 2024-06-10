@@ -1,53 +1,123 @@
-import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { ColorModeContext, tokens } from "../../theme";
-import { DataGrid } from "@mui/x-data-grid";
-import { dataCoach } from "../../data";
+import { DataGrid, GridToolbarContainer } from "@mui/x-data-grid";
+import { dataJourney, dataCoach, dataDriver } from "../../data";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import AxiosInstance from "../../api/api";
+import { DateTimeUtil } from "../../utils";
 import ModifyModal from "./ModifyModal";
-import Toolbar from "../../components/Toolbar";
+import { MdAddBox } from "react-icons/md";
+import { FaDeleteLeft } from "react-icons/fa6";
+import Button from "../../components/customs/Button";
 
-export default function Coach() {
+function Toolbar(props) {
+	const theme = useTheme();
+	const colors = tokens(theme.palette.mode);
+
+	return (
+		<GridToolbarContainer style={{ padding: "10px 0" }}>
+			<Button
+				label="ADD RECORD"
+				onClick={props.openCreateDialog}
+				startIcon={<MdAddBox />}
+				style={{ padding: "10px", color: colors.green[600] }}
+			/>
+			<Button
+				label="DELETE RECORD"
+				onClick={props.openDeleteDialog}
+				disabled={!props.openForUpdating}
+				startIcon={<FaDeleteLeft />}
+				style={{ padding: "10px", color: colors.green[600] }}
+			/>
+		</GridToolbarContainer>
+	);
+}
+
+export default function Journey() {
 	const theme = useTheme();
 	const colors = tokens(theme.palette.mode);
 	// DATAGRID CONFIGURATION.
 	const columns = [
-		{ field: "id", headerName: "ID", flex: 1, hideable: false },
+		{ field: "id", headerName: "ID", flex: 0.75, hideable: false },
 		{
-			field: "licensePlate",
-			headerName: "LICENSE PLATE",
-			flex: 1,
-			hideable: false,
-		},
-		{
-			field: "totalSeats",
-			headerName: "TOTAL SEATS",
-			type: "number",
-			flex: 1,
-		},
-		{
-			field: "busType",
-			headerName: "TYPE",
+			field: "bus",
+			headerName: "COACH",
 			flex: 0.75,
-			valueGetter: (value) => value,
+			hideable: false,
+			valueGetter: (value) => value.licensePlate,
+		},
+		{
+			field: "departureDate",
+			headerName: "DEPARTURE TIME",
+			flex: 1,
+			type: "dateTime",
+			valueGetter: (value, row) =>
+				DateTimeUtil.parse(`${value} ${row.departureTime}`, true, true),
+			valueFormatter: (value) => DateTimeUtil.format(value, true, true),
+		},
+		{
+			field: "departureProvince",
+			headerName: "DEPARTURE PLACE",
+			flex: 1,
+			valueGetter: (value, row) => `${value} ${row.destProvince}`,
+		},
+		{
+			field: "estimatedTime",
+			headerName: "DURATION (H)",
+			flex: 0.75,
+			type: "number",
+		},
+		{
+			field: "price",
+			headerName: "PRICE (VNĐ)",
+			flex: 0.75,
+			type: "number",
 		},
 	];
-	const [rows, setRows] = useState(dataCoach);
+	const [rows, setRows] = useState(dataJourney);
 	const selectedRow = useRef({});
 	const [selectedRowModel, setSelectedRowModel] = useState([]);
 	// DIALOG SECTION.
-	const openForUpdating = useMemo(
-		() => Boolean(selectedRow.current.id),
-		[selectedRow.current]
-	);
 	const [openModify, setOpenModify] = useState(false);
 	const [openDelete, setOpenDelete] = useState(false);
 	// API.
 	const { notify } = useContext(ColorModeContext);
+	const [coaches, setCoaches] = useState(dataCoach);
+	const [drivers, setDrivers] = useState(dataDriver);
+	const [provinces, setProvinces] = useState([]);
 	useEffect(() => {
 		AxiosInstance.get("manage/buses")
+			.then((response) => {
+				const data = response.data;
+				setCoaches(data.data);
+			})
+			.catch((error) => {
+				const data = error?.response?.data;
+				notify(data?.message || error.message, "error");
+			});
+		AxiosInstance.get("manage/drivers")
+			.then((response) => {
+				const data = response.data;
+				setDrivers(data.data);
+			})
+			.catch((error) => {
+				const data = error?.response?.data;
+				notify(data?.message || error.message, "error");
+			});
+		AxiosInstance.get("manage/provinces")
+			.then((response) => {
+				const data = response.data;
+				setProvinces(data.data);
+			})
+			.catch((error) => {
+				const data = error?.response?.data;
+				notify(data?.message || error.message, "error");
+			});
+	}, []);
+	useEffect(() => {
+		AxiosInstance.get("manage/journeys")
 			.then((response) => {
 				const data = response.data;
 				setRows(data.data);
@@ -87,37 +157,24 @@ export default function Coach() {
 		handleFormCancel();
 	}
 
-	// CALL API CREATE & UPDATE.
+	// CALL API CREATE.
 	function handleModifySubmit(contentValues, { setSubmitting }) {
-		if (!openForUpdating) {
-			AxiosInstance.post("manage/bus", contentValues)
-				.then((response) => {
-					const data = response.data;
-					notify(data.message);
-					closeModifyDialog();
-				})
-				.catch((error) => {
-					const data = error?.response?.data;
-					notify(data?.message || error.message, "error");
-				});
-		} else {
-			AxiosInstance.put("manage/bus", contentValues)
-				.then((response) => {
-					const data = response.data;
-					notify(data.message);
-					closeModifyDialog();
-				})
-				.catch((error) => {
-					const data = error?.response?.data;
-					notify(data?.message || error.message, "error");
-				});
-		}
+		AxiosInstance.post("manage/journey", contentValues)
+			.then((response) => {
+				const data = response.data;
+				notify(data.message);
+				closeModifyDialog();
+			})
+			.catch((error) => {
+				const data = error?.response?.data;
+				notify(data?.message || error.message, "error");
+			});
 		setSubmitting(false);
 	}
 
 	// CALL API DELETE.
 	function handleDeleteSubmit() {
-		const PATH = `manage/bus?id=${selectedRow.current["id"]}`;
+		const PATH = `manage/journey?id=${selectedRow.current["id"]}`;
 		AxiosInstance.delete(PATH)
 			.then((response) => {
 				const data = response.data;
@@ -189,7 +246,6 @@ export default function Coach() {
 							openCreateDialog,
 							openModifyDialog,
 							openDeleteDialog,
-							openForUpdating,
 						},
 					}}
 					rowSelectionModel={selectedRowModel}
@@ -207,8 +263,12 @@ export default function Coach() {
 				isOpened={openModify}
 				handleClose={closeModifyDialog}
 				handleFormSubmit={handleModifySubmit}
-				title="COACH PROFILE"
-				data={selectedRow.current}
+				title="JOURNEY PROFILE"
+				data={{
+					coaches: coaches,
+					drivers: drivers,
+					provinces: provinces,
+				}}
 			/>
 
 			<ConfirmDialog

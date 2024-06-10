@@ -10,6 +10,7 @@ import Topbar from "./components/Topbar";
 import Employee from "./pages/employee";
 import Driver from "./pages/driver";
 import Coach from "./pages/coach";
+import Journey from "./pages/journey";
 
 function App() {
 	const [theme, colorMode] = useMode();
@@ -45,6 +46,10 @@ function App() {
 										element={<Driver />}
 									/>
 									<Route path="/coach" element={<Coach />} />
+									<Route
+										path="/journey"
+										element={<Journey />}
+									/>
 								</Routes>
 							</div>
 						</main>

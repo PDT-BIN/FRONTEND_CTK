@@ -3,16 +3,23 @@ import moment from "moment";
 export class DateTimeUtil {
 	static REQUEST_FORMAT = "YYYY-MM-DD";
 	static DISPLAY_FORMAT = "DD/MM/YYYY";
+	static DATETIME_FORMAT = "YYYY-MM-DD HH:mm";
 
-	static parse(value, toDate = true) {
-		const time = moment(value, DateTimeUtil.REQUEST_FORMAT, true);
+	static parse(value, toDate = true, toTime = false) {
+		const format = toTime
+			? DateTimeUtil.DATETIME_FORMAT
+			: DateTimeUtil.DISPLAY_FORMAT;
+
+		const time = moment(value, format, true);
 		return toDate ? time.toDate() : time;
 	}
 
-	static format(value, display = true) {
-		const format = display
+	static format(value, display = true, datetime = false) {
+		const format = !display
+			? DateTimeUtil.REQUEST_FORMAT
+			: !datetime
 			? DateTimeUtil.DISPLAY_FORMAT
-			: DateTimeUtil.REQUEST_FORMAT;
+			: DateTimeUtil.DATETIME_FORMAT;
 		const date = moment(value).format(format);
 		return date !== "Invalid date" ? date : "";
 	}
